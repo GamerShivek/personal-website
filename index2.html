@@ -652,32 +652,40 @@
             <h2 class="section-title">My Birthplace (Patiala)</h2>
             <p class="intro-text">I was born in a beautiful city with rich cultural heritage. Here are some glimpses of the place I call home.</p>
             
-            <div class="image-wheel-container">
-              <div class="image-wheel">
-                <div class="wheel-item">
-                  <div class="image-container">
+            <div class="carousel-container">
+              <div class="carousel">
+                <div class="carousel-item">
+                  <div class="image-wrapper">
                     <img src="Sheesh_mahal.png" alt="Sheesh Mahal">
+                    <div class="image-caption">Sheesh Mahal</div>
                   </div>
-                  <p class="image-caption">Sheesh Mahal</p>
                 </div>
-                <div class="wheel-item">
-                  <div class="image-container">
+                <div class="carousel-item">
+                  <div class="image-wrapper">
                     <img src="Dukh_Niwaran.png" alt="Dukh Niwaran">
+                    <div class="image-caption">Dukh Niwaran</div>
                   </div>
-                  <p class="image-caption">Dukh Niwaran</p>
                 </div>
-                <div class="wheel-item">
-                  <div class="image-container">
+                <div class="carousel-item">
+                  <div class="image-wrapper">
                     <img src="Moti_Palace.png" alt="Moti Palace">
+                    <div class="image-caption">Moti Palace</div>
                   </div>
-                  <p class="image-caption">Moti Palace</p>
                 </div>
-                <div class="wheel-item">
-                  <div class="image-container">
+                <div class="carousel-item">
+                  <div class="image-wrapper">
                     <img src="NIS.png" alt="NIS">
+                    <div class="image-caption">NIS</div>
                   </div>
-                  <p class="image-caption">NIS</p>
                 </div>
+              </div>
+              <button class="carousel-button prev">&lt;</button>
+              <button class="carousel-button next">&gt;</button>
+              <div class="carousel-dots">
+                <span class="dot active" data-index="0"></span>
+                <span class="dot" data-index="1"></span>
+                <span class="dot" data-index="2"></span>
+                <span class="dot" data-index="3"></span>
               </div>
             </div>
           </div>
@@ -685,112 +693,119 @@
       </section>
       
       <style>
-        /* Image wheel styling with fixes */
+        /* Carousel styling */
         .intro-text {
-          margin-bottom: 6rem; /* Added more space before the wheel starts */
+          margin-bottom: 3rem;
           font-size: 1.2rem;
         }
         
-        .image-wheel-container {
+        .carousel-container {
           position: relative;
-          height: 550px; /* Increased height */
-          margin: 3rem auto;
-          perspective: 1000px;
+          max-width: 800px;
+          margin: 2rem auto;
+          overflow: hidden;
         }
         
-        .image-wheel {
-          position: relative;
-          width: 100%;
-          height: 100%;
-          transform-style: preserve-3d;
-          transition: transform 1s ease;
-        }
-        
-        .wheel-item {
-          position: absolute;
-          width: 80%;
-          max-width: 400px;
-          left: 50%;
-          transform: translateX(-50%);
+        .carousel {
           display: flex;
-          flex-direction: column;
-          align-items: center;
-          transition: all 0.5s ease;
+          transition: transform 0.5s ease;
         }
         
-        .image-container {
-          width: 100%;
-          height: 300px;
+        .carousel-item {
+          min-width: 100%;
+          padding: 0 10px;
+        }
+        
+        .image-wrapper {
+          position: relative;
           overflow: hidden;
           border-radius: 20px;
-          box-shadow: var(--shadow);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+          height: 400px;
         }
         
-        .wheel-item img {
+        .carousel-item img {
           width: 100%;
           height: 100%;
           object-fit: cover;
-          transition: all 0.5s ease;
-          transform: scale(1.05);
+          transition: transform 0.3s ease;
+          border-radius: 20px;
         }
         
         .image-caption {
-          margin-top: 1.5rem;
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+          color: white;
+          padding: 20px;
           font-weight: 700;
-          font-size: 1.6rem; /* Larger font size */
-          color: #1a56db; /* Dark blue color */
+          font-size: 1.6rem;
           text-align: center;
           opacity: 0;
-          transition: opacity 0.5s ease;
-          text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8); /* Text shadow for better visibility */
+          transform: translateY(20px);
+          transition: all 0.3s ease;
         }
         
-        /* Default positioning for each item - adjusted to ensure text visibility */
-        .wheel-item:nth-child(1) {
-          transform: translateX(-50%) translateY(0%) translateZ(200px);
-          z-index: 4;
-        }
-        
-        .wheel-item:nth-child(2) {
-          transform: translateX(-50%) translateY(25%) translateZ(0px);
-          z-index: 3;
-        }
-        
-        .wheel-item:nth-child(3) {
-          transform: translateX(-50%) translateY(50%) translateZ(-200px);
-          z-index: 2;
-        }
-        
-        .wheel-item:nth-child(4) {
-          transform: translateX(-50%) translateY(75%) translateZ(-400px);
-          z-index: 1;
-        }
-        
-        /* Active styles */
-        .wheel-item:nth-child(1) img {
-          filter: blur(0);
-        }
-        
-        .wheel-item:nth-child(1) .image-caption {
+        .image-wrapper:hover .image-caption {
           opacity: 1;
+          transform: translateY(0);
         }
         
-        .wheel-item:nth-child(2) img,
-        .wheel-item:nth-child(3) img,
-        .wheel-item:nth-child(4) img {
-          filter: blur(3px);
+        .image-wrapper:hover img {
+          transform: scale(1.05);
         }
         
-        .wheel-item:nth-child(2) .image-caption {
-          opacity: 0.8; /* Increased opacity */
+        .carousel-button {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          background: rgba(255, 255, 255, 0.7);
+          border: none;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          font-size: 1.5rem;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 10;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+          transition: background 0.3s ease;
         }
         
-        .wheel-item:nth-child(3) .image-caption {
-          opacity: 0.6; /* Increased opacity */
+        .carousel-button:hover {
+          background: rgba(255, 255, 255, 0.9);
         }
         
-        .wheel-item:nth-child(4) .image-caption {
-          opacity: 0.4; /* Increased opacity */
+        .carousel-button.prev {
+          left: 10px;
+        }
+        
+        .carousel-button.next {
+          right: 10px;
+        }
+        
+        .carousel-dots {
+          display: flex;
+          justify-content: center;
+          margin-top: 20px;
+        }
+        
+        .dot {
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background-color: #ccc;
+          margin: 0 6px;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+        }
+        
+        .dot.active {
+          background-color: #1a56db;
         }
       </style>
 
@@ -1074,94 +1089,94 @@
   </script>
 
 <script>
-    // Add this to your existing JavaScript section
     document.addEventListener('DOMContentLoaded', function() {
-      const wheel = document.querySelector('.image-wheel');
-      const wheelItems = document.querySelectorAll('.wheel-item');
-      let currentIndex = 0;
+      const carousel = document.querySelector('.carousel');
+      const items = document.querySelectorAll('.carousel-item');
+      const prevBtn = document.querySelector('.carousel-button.prev');
+      const nextBtn = document.querySelector('.carousel-button.next');
+      const dots = document.querySelectorAll('.dot');
       
-      // Function to rotate the wheel
-      function rotateWheel() {
-        wheelItems.forEach((item, index) => {
-          // Remove all position classes
-          item.style.transform = '';
-          item.style.zIndex = '';
-          
-          // Calculate the new position
-          let newPosition = (index - currentIndex + wheelItems.length) % wheelItems.length;
-          
-          // Set new position with adjusted spacing for better text visibility
-          if (newPosition === 0) {
-            item.style.transform = 'translateX(-50%) translateY(0%) translateZ(200px)';
-            item.style.zIndex = '4';
-            item.querySelector('img').style.filter = 'blur(0)';
-            item.querySelector('.image-caption').style.opacity = '1';
-          } else if (newPosition === 1) {
-            item.style.transform = 'translateX(-50%) translateY(25%) translateZ(0px)';
-            item.style.zIndex = '3';
-            item.querySelector('img').style.filter = 'blur(3px)';
-            item.querySelector('.image-caption').style.opacity = '0.8';
-          } else if (newPosition === 2) {
-            item.style.transform = 'translateX(-50%) translateY(50%) translateZ(-200px)';
-            item.style.zIndex = '2';
-            item.querySelector('img').style.filter = 'blur(3px)';
-            item.querySelector('.image-caption').style.opacity = '0.6';
+      let currentIndex = 0;
+      const totalItems = items.length;
+      
+      // Function to update carousel position
+      function updateCarousel() {
+        carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+        
+        // Update active dot
+        dots.forEach((dot, index) => {
+          if (index === currentIndex) {
+            dot.classList.add('active');
           } else {
-            item.style.transform = 'translateX(-50%) translateY(75%) translateZ(-400px)';
-            item.style.zIndex = '1';
-            item.querySelector('img').style.filter = 'blur(3px)';
-            item.querySelector('.image-caption').style.opacity = '0.4';
+            dot.classList.remove('active');
           }
         });
       }
       
-      // Mouse wheel event to rotate
-      wheel.addEventListener('wheel', function(e) {
-        e.preventDefault();
-        
-        if (e.deltaY > 0) {
-          // Scroll down - move forward
-          currentIndex = (currentIndex + 1) % wheelItems.length;
-        } else {
-          // Scroll up - move backward
-          currentIndex = (currentIndex - 1 + wheelItems.length) % wheelItems.length;
-        }
-        
-        rotateWheel();
+      // Event listeners for buttons
+      nextBtn.addEventListener('click', function() {
+        currentIndex = (currentIndex + 1) % totalItems;
+        updateCarousel();
       });
       
-      // Touch events for mobile support
-      let touchStartY = 0;
+      prevBtn.addEventListener('click', function() {
+        currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+        updateCarousel();
+      });
       
-      wheel.addEventListener('touchstart', function(e) {
-        touchStartY = e.touches[0].clientY;
+      // Event listeners for dots
+      dots.forEach(dot => {
+        dot.addEventListener('click', function() {
+          currentIndex = parseInt(this.getAttribute('data-index'));
+          updateCarousel();
+        });
+      });
+      
+      // Optional: Auto slide (uncomment if needed)
+      /*
+      setInterval(function() {
+        currentIndex = (currentIndex + 1) % totalItems;
+        updateCarousel();
+      }, 5000);
+      */
+      
+      // Touch events for mobile support
+      let touchStartX = 0;
+      let touchEndX = 0;
+      
+      carousel.addEventListener('touchstart', function(e) {
+        touchStartX = e.touches[0].clientX;
       }, { passive: true });
       
-      wheel.addEventListener('touchmove', function(e) {
-        e.preventDefault();
-        const touchY = e.touches[0].clientY;
-        const diff = touchStartY - touchY;
-        
-        if (Math.abs(diff) > 10) { // Threshold to avoid small movements
-          if (diff > 0) {
-            // Swipe up - move forward
-            currentIndex = (currentIndex + 1) % wheelItems.length;
-          } else {
-            // Swipe down - move backward
-            currentIndex = (currentIndex - 1 + wheelItems.length) % wheelItems.length;
-          }
-          
-          rotateWheel();
-          touchStartY = touchY; // Reset for continuous scrolling
-        }
-      }, { passive: false });
+      carousel.addEventListener('touchend', function(e) {
+        touchEndX = e.changedTouches[0].clientX;
+        handleSwipe();
+      }, { passive: true });
       
-      // Click on image to bring it to front
-      wheelItems.forEach((item, index) => {
-        item.addEventListener('click', function() {
-          currentIndex = index;
-          rotateWheel();
-        });
+      function handleSwipe() {
+        const difference = touchStartX - touchEndX;
+        
+        if (Math.abs(difference) > 50) {
+          if (difference > 0) {
+            // Swipe left - go to next
+            currentIndex = (currentIndex + 1) % totalItems;
+          } else {
+            // Swipe right - go to previous
+            currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+          }
+          updateCarousel();
+        }
+      }
+      
+      // Keyboard navigation
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowRight') {
+          currentIndex = (currentIndex + 1) % totalItems;
+          updateCarousel();
+        } else if (e.key === 'ArrowLeft') {
+          currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+          updateCarousel();
+        }
       });
     });
   </script>
