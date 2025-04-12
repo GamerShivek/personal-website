@@ -185,33 +185,33 @@
 
     .section-content {
       background: var(--section-bg);
-      border-radius: 25px; /* Slightly larger border radius */
-      padding: 4rem; /* Increased padding */
-      box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15); /* Enhanced shadow */
+      border-radius: 25px; 
+      padding: 4rem;
+      box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15); 
       width: 100%;
-      max-width: 1400px; /* Increased max-width */
+      max-width: 1400px; 
       transition: var(--transition);
     }
 
     .section-content p {
-    font-size: 1.2rem; /* Slightly larger paragraph text */
-    line-height: 1.7; /* Improved line height */
+    font-size: 1.2rem; 
+    line-height: 1.7; 
   }
   .skills-category {
-    margin-bottom: 3rem; /* Slightly increased spacing */
+    margin-bottom: 3rem; 
   }
 
   .skills-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 1.5rem; /* Increased gap between skill tags */
-  justify-content: flex-start; /* Align items to the start */
+  gap: 1.5rem; 
+  justify-content: flex-start;
 }
 
 .skill-tag {
-  padding: 0.8rem 1.5rem; /* Slightly larger padding */
-  font-size: 1.1rem; /* Slightly larger font size */
-  margin-bottom: 0.5rem; /* Added some bottom margin for better spacing */
+  padding: 0.8rem 1.5rem; 
+  font-size: 1.1rem; 
+  margin-bottom: 0.5rem; 
 }
 
 @media (max-width: 768px) {
@@ -247,11 +247,11 @@
     max-width: 350px;
     border-radius: 50%;
     box-shadow: var(--shadow);
-    transition: transform 0.3s ease; /* Smooth transition added */
+    transition: transform 0.3s ease;
   }
 
   .profile-image img:hover {
-    transform: scale(1.15); /* Grows 15% larger on hover */
+    transform: scale(1.15);
   }
 
     .social-icons {
@@ -313,7 +313,7 @@
 
     .education-item h3, .skills-category h3 {
       color: var(--secondary-color);
-      font-size: 1.8rem; /* Larger category titles */
+      font-size: 1.8rem; 
       margin-bottom: 1rem;
     }
 
@@ -464,7 +464,6 @@
       }
     }
   </style>
-  <!-- Add this to your existing style section in the head -->
     <style>
     /* Animation for home content elements */
     .home-text h1,
@@ -497,24 +496,6 @@
       }
     }
   
-    /* Add a subtle entrance animation for social icons */
-    .social-icons a {
-      opacity: 0;
-      animation: popIn 0.5s ease forwards;
-    }
-  
-    .social-icons a:nth-child(1) {
-      animation-delay: 1.1s;
-    }
-  
-    .social-icons a:nth-child(2) {
-      animation-delay: 1.3s;
-    }
-  
-    .social-icons a:nth-child(3) {
-      animation-delay: 1.5s;
-    }
-  
     @keyframes popIn {
       from {
         opacity: 0;
@@ -542,6 +523,7 @@
     }
   </style>
   
+  <!--adds the effect of popping up of the titles when you scroll upto them -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       // Create Intersection Observer for section titles
@@ -862,8 +844,6 @@
               <span class="skill-tag expert">C language</span>
               <span class="skill-tag expert">C++ language</span>
               <span class="skill-tag expert">Python Language</span>
-              <!-- <span class="skill-tag expert">Textile Design</span>
-              <span class="skill-tag expert">Garment Construction</span> -->
             </div>
           </div>
           
@@ -884,15 +864,12 @@
               <span class="skill-tag intermediate">Lawn tennis</span>
               <span class="skill-tag intermediate">Video editing</span>
               <span class="skill-tag intermediate">Photo editing</span>
-              <!-- <span class="skill-tag intermediate">Project Management</span>
-              <span class="skill-tag intermediate">Digital Printing</span> -->
             </div>
           </div>
           
           <div class="skills-category">
             <h3>Beginner Level</h3>
             <div class="skills-list">
-                <!-- <span class="skill-tag advanced">Adobe Photoshop</span> -->
                 <span class="skill-tag advanced">Blender 3D graphics</span>
             </div>
           </div>
@@ -922,7 +899,7 @@
             <a href="https://www.instagram.com/shivek_gupta06/?hl=en" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
             <a href="https://www.linkedin.com/in/shivek-gupta-584254307/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
             <a href="https://github.com/GamerShivek" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
-            <a href="mailto:shivekgupta6209@gmail.com" aria-label="Gmail"><i class="fab fa-google"></i></a>
+            <a href="mailto:gamershivek@gmail.com" aria-label="Gmail"><i class="fab fa-google"></i></a>
           </div>
           
           <form class="contact-form">
@@ -1001,7 +978,7 @@
         i++;
         setTimeout(typing, speed);
       } else if (callback) {
-        setTimeout(callback, 2000); // Pause before erasing
+        setTimeout(callback, 2000); // Pause for 2 sec before erasing
       }
     }
     typing();
@@ -1062,24 +1039,7 @@
       });
     });
 
-    // Smooth scrolling (already handled by CSS, but this adds offset for header)
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        
-        const target = document.querySelector(this.getAttribute('href'));
-        const headerOffset = 80;
-        const elementPosition = target.offsetTop;
-        const offsetPosition = elementPosition - headerOffset;
-
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: 'smooth'
-        });
-      });
-    });
-
-    // Form submission (placeholder - would need backend processing)
+    // Form submission wihtout any backend functionality
     const contactForm = document.querySelector('.contact-form');
     contactForm.addEventListener('submit', function(e) {
       e.preventDefault();
@@ -1088,6 +1048,8 @@
     });
   </script>
 
+
+<!-- Carousel implementation -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
       const carousel = document.querySelector('.carousel');
@@ -1132,15 +1094,8 @@
         });
       });
       
-      // Optional: Auto slide (uncomment if needed)
-      /*
-      setInterval(function() {
-        currentIndex = (currentIndex + 1) % totalItems;
-        updateCarousel();
-      }, 5000);
-      */
-      
       // Touch events for mobile support
+      // This code was generated by LLM
       let touchStartX = 0;
       let touchEndX = 0;
       
@@ -1168,7 +1123,7 @@
         }
       }
       
-      // Keyboard navigation
+      // Keyboard navigation using arrow keys for image scrolling
       document.addEventListener('keydown', function(e) {
         if (e.key === 'ArrowRight') {
           currentIndex = (currentIndex + 1) % totalItems;
@@ -1181,6 +1136,8 @@
     });
   </script>
   <script>
+
+  // The shooting star code was written using LLM
   // Shooting Stars in Dark Mode
   function createShootingStar() {
       if (!document.body.classList.contains('dark-mode')) return;
@@ -1188,7 +1145,7 @@
       const star = document.createElement('div');
       star.classList.add('shooting-star');
       
-      // Random starting position from top-left quadrant
+      // Random starting position from top-left corner
       const startX = Math.random() * (window.innerWidth * 0.5);
       const startY = Math.random() * (window.innerHeight * 0.5);
       
@@ -1208,7 +1165,7 @@
       if (document.body.classList.contains('dark-mode')) {
           createShootingStar();
       }
-      setTimeout(startShootingStars, Math.random() * 500 + 500); // Random interval between 1-3 seconds
+      setTimeout(startShootingStars, Math.random() * 500 + 500); // Random interval between 0.5-1 seconds
   }
 
   // Start the shooting stars when page loads
