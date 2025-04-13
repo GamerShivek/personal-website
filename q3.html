@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Text Analyzer</title>
+    <style>
+        :root {
+            --primary-color: #3a86ff;
+            --secondary-color: #8338ec;
+            --text-color: #333;
+            --bg-color: #fff;
+            --section-bg: rgba(255, 255, 255, 0.9);
+            --nav-bg: rgba(255, 255, 255, 0.8);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            transition: var(--transition);
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #70d4e8, #3a86ff, #5119a0);
+            background-size: 400% 400%;
+            animation: gradient 10s ease infinite;
+            transition: var(--transition);
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            background: var(--section-bg);
+            border-radius: 25px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            width: 100%;
+            max-width: 800px;
+            margin-top: 2rem;
+            transition: var(--transition);
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            text-align: center;
+        }
+
+        textarea {
+            width: 100%;
+            height: 200px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: inherit;
+            resize: vertical;
+            transition: var(--transition);
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(58, 134, 255, 0.2);
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: block;
+            margin: 0 auto;
+        }
+
+        button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+
+        #results {
+            margin-top: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        #results.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #results h3 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        #results h4 {
+            color: var(--secondary-color);
+            font-size: 1.4rem;
+            margin: 1.5rem 0 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+                margin: 1rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="container">
+        <h2>Text Analyzer</h2>
+        <textarea id="textInput" placeholder="Enter your text here (10000+ words supported)"></textarea>
+        <button onclick="analyzeText()">Analyze Text</button>
+        <div id="results"></div>
+    </div>
+
+    <script>
+        function analyzeText() {
+            const text = document.getElementById('textInput').value;
+            const resultsDiv = document.getElementById('results');
+            
+            // a. Basic counts
+            const letters = text.match(/[a-zA-Z]/g)?.length || 0;
+            const words = text.split(/\s+/).filter(word => word.length > 0).length;
+            const spaces = text.split(' ').length - 1;
+            const newlines = text.split('\n').length - 1;
+            const specialSymbols = text.match(/[^a-zA-Z0-9\s\n]/g)?.length || 0;
+
+            // b. Pronouns
+            const pronounsList = ['i', 'me', 'my', 'mine', 'you', 'your', 'yours', 'he', 'him', 'his', 
+                               'she', 'her', 'hers', 'it', 'its', 'we', 'us', 'our', 'ours', 
+                               'they', 'them', 'their', 'theirs'];
+            const pronounCounts = {};
+            pronounsList.forEach(pronoun => pronounCounts[pronoun] = 0);
+            
+            // c. Prepositions
+            const prepositionsList = ['about', 'above', 'across', 'after', 'against', 'along', 'among', 
+                                    'around', 'at', 'before', 'behind', 'below', 'beneath', 'beside', 
+                                    'between', 'beyond', 'by', 'down', 'during', 'for', 'from', 'in', 
+                                    'into', 'near', 'of', 'off', 'on', 'over', 'through', 'to', 'toward', 
+                                    'under', 'until', 'up', 'upon', 'with', 'within', 'without'];
+            const prepositionCounts = {};
+            prepositionsList.forEach(prep => prepositionCounts[prep] = 0);
+
+            // d. Indefinite articles
+            const articlesList = ['a', 'an'];
+            const articleCounts = {};
+            articlesList.forEach(article => articleCounts[article] = 0);
+
+            // Tokenization and counting
+            const tokens = text.toLowerCase().split(/\s+/).filter(token => token.length > 0);
+            tokens.forEach(token => {
+                // Clean token of punctuation for accurate matching
+                const cleanToken = token.replace(/[^a-z]/g, '');
+                
+                if (pronounsList.includes(cleanToken)) {
+                    pronounCounts[cleanToken]++;
+                }
+                if (prepositionsList.includes(cleanToken)) {
+                    prepositionCounts[cleanToken]++;
+                }
+                if (articlesList.includes(cleanToken)) {
+                    articleCounts[cleanToken]++;
+                }
+            });
+
+            // Generate output
+            let output = '<h3>Analysis Results:</h3>';
+            
+            // a. Basic counts output
+            output += '<h4>a. Basic Counts:</h4>';
+            output += `Letters: ${letters}<br>`;
+            output += `Words: ${words}<br>`;
+            output += `Spaces: ${spaces}<br>`;
+            output += `Newlines: ${newlines}<br>`;
+            output += `Special Symbols: ${specialSymbols}<br>`;
+
+            // b. Pronouns output
+            output += '<h4>b. Pronoun Counts:</h4>';
+            for (const [pronoun, count] of Object.entries(pronounCounts)) {
+                if (count > 0) output += `${pronoun}: ${count}<br>`;
+            }
+
+            // c. Prepositions output
+            output += '<h4>c. Preposition Counts:</h4>';
+            for (const [prep, count] of Object.entries(prepositionCounts)) {
+                if (count > 0) output += `${prep}: ${count}<br>`;
+            }
+
+            // d. Articles output
+            output += '<h4>d. Indefinite Article Counts:</h4>';
+            for (const [article, count] of Object.entries(articleCounts)) {
+                if (count > 0) output += `${article}: ${count}<br>`;
+            }
+
+            resultsDiv.innerHTML = output;
+            resultsDiv.classList.add('visible');
+        }
+
+        function toggleTheme() {
+            const body = document.body;
+            const themeToggle = document.getElementById('themeToggle');
+            
+            if (body.classList.contains('dark-mode')) {
+                body.classList.remove('dark-mode');
+                themeToggle.textContent = '🌙';
+            } else {
+                body.classList.add('dark-mode');
+                themeToggle.textContent = '☀️';
+            }
+        }
+    </script>
+</body>
+</html>
